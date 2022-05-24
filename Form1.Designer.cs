@@ -28,17 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.OpenClose = new System.Windows.Forms.Button();
             this.PortSelect = new System.Windows.Forms.ComboBox();
             this.BaudrateSelect = new System.Windows.Forms.ComboBox();
             this.textBox_rec = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
             this.textBox_send = new System.Windows.Forms.TextBox();
             this.SendBtn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.ClearBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.date = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.time = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OpenClose
@@ -69,6 +74,7 @@
             this.BaudrateSelect.Items.AddRange(new object[] {
             "1200",
             "9600",
+            "19200",
             "38400",
             "57600",
             "115200"});
@@ -82,7 +88,7 @@
             // 
             this.textBox_rec.BackColor = System.Drawing.Color.Black;
             this.textBox_rec.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_rec.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBox_rec.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBox_rec.ForeColor = System.Drawing.Color.White;
             this.textBox_rec.Location = new System.Drawing.Point(150, 35);
             this.textBox_rec.Multiline = true;
@@ -91,17 +97,18 @@
             this.textBox_rec.Size = new System.Drawing.Size(638, 345);
             this.textBox_rec.TabIndex = 4;
             // 
-            // button3
+            // SaveBtn
             // 
-            this.button3.BackColor = System.Drawing.Color.DarkGray;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Location = new System.Drawing.Point(12, 150);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 52);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "SAVE TO .TXT";
-            this.button3.UseVisualStyleBackColor = false;
+            this.SaveBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveBtn.ForeColor = System.Drawing.Color.Black;
+            this.SaveBtn.Location = new System.Drawing.Point(12, 150);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(63, 52);
+            this.SaveBtn.TabIndex = 5;
+            this.SaveBtn.Text = "SAVE TO .TXT";
+            this.SaveBtn.UseVisualStyleBackColor = false;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // textBox_send
             // 
@@ -127,17 +134,18 @@
             this.SendBtn.UseVisualStyleBackColor = false;
             this.SendBtn.Click += new System.EventHandler(this.SendBtn_Click);
             // 
-            // button2
+            // ClearBtn
             // 
-            this.button2.BackColor = System.Drawing.Color.DarkGray;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(81, 150);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(63, 52);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "CLEAR";
-            this.button2.UseVisualStyleBackColor = false;
+            this.ClearBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.ClearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ClearBtn.ForeColor = System.Drawing.Color.Black;
+            this.ClearBtn.Location = new System.Drawing.Point(81, 150);
+            this.ClearBtn.Name = "ClearBtn";
+            this.ClearBtn.Size = new System.Drawing.Size(63, 52);
+            this.ClearBtn.TabIndex = 8;
+            this.ClearBtn.Text = "CLEAR";
+            this.ClearBtn.UseVisualStyleBackColor = false;
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
             // label1
             // 
@@ -150,16 +158,16 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "JUST A SERIAL TERMINAL";
             // 
-            // label2
+            // date
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(661, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 18);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "DATETIME";
+            this.date.AutoSize = true;
+            this.date.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.date.ForeColor = System.Drawing.Color.White;
+            this.date.Location = new System.Drawing.Point(615, 9);
+            this.date.Name = "date";
+            this.date.Size = new System.Drawing.Size(43, 18);
+            this.date.TabIndex = 10;
+            this.date.Text = "DATE";
             // 
             // label3
             // 
@@ -172,19 +180,60 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "-CHOOSE COMM-";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // time
+            // 
+            this.time.AutoSize = true;
+            this.time.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.time.ForeColor = System.Drawing.Color.White;
+            this.time.Location = new System.Drawing.Point(713, 9);
+            this.time.Name = "time";
+            this.time.Size = new System.Drawing.Size(43, 18);
+            this.time.TabIndex = 12;
+            this.time.Text = "TIME";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(9, 402);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 18);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "© RND.11";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(30, 420);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 18);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "v0.1.2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.time);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.date);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.ClearBtn);
             this.Controls.Add(this.SendBtn);
             this.Controls.Add(this.textBox_send);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.textBox_rec);
             this.Controls.Add(this.BaudrateSelect);
             this.Controls.Add(this.PortSelect);
@@ -193,7 +242,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.Text = "RND.11 TERMINAL";
+            this.Text = "[ALWAYS ON TOP TERMINAL]";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -206,12 +255,16 @@
         private ComboBox PortSelect;
         private ComboBox BaudrateSelect;
         private TextBox textBox_rec;
-        private Button button3;
+        private Button SaveBtn;
         private TextBox textBox_send;
         private Button SendBtn;
-        private Button button2;
+        private Button ClearBtn;
         private Label label1;
-        private Label label2;
+        private Label date;
         private Label label3;
+        private System.Windows.Forms.Timer timer1;
+        private Label time;
+        private Label label2;
+        private Label label4;
     }
 }
